@@ -310,14 +310,21 @@ public class Catalina {
         digester.setFakeAttributes(fakeAttributes);
         digester.setUseContextClassLoader(true);
 
+        //将rule设置为xml的解析数据结构,添加若干规则来解析server.xml
         // Configure the actions we will be using
         digester.addObjectCreate("Server",
                                  "org.apache.catalina.core.StandardServer",
                                  "className");
         digester.addSetProperties("Server");
+
+        /**
+         * 调用Catalina的setServer方法,传递的参数为StandardServer
+         */
         digester.addSetNext("Server",
                             "setServer",
                             "org.apache.catalina.Server");
+
+        /*---------------------------------------------------------*/
 
         digester.addObjectCreate("Server/GlobalNamingResources",
                                  "org.apache.catalina.deploy.NamingResources");
@@ -325,6 +332,8 @@ public class Catalina {
         digester.addSetNext("Server/GlobalNamingResources",
                             "setGlobalNamingResources",
                             "org.apache.catalina.deploy.NamingResources");
+
+        /*---------------------------------------------------------*/
 
         digester.addObjectCreate("Server/Listener",
                                  null, // MUST be specified in the element
@@ -338,9 +347,12 @@ public class Catalina {
                                  "org.apache.catalina.core.StandardService",
                                  "className");
         digester.addSetProperties("Server/Service");
+        // 调用StandardServer的addService,添加StandardService
         digester.addSetNext("Server/Service",
                             "addService",
                             "org.apache.catalina.Service");
+
+        /*---------------------------------------------------------*/
 
         digester.addObjectCreate("Server/Service/Listener",
                                  null, // MUST be specified in the element
@@ -355,16 +367,17 @@ public class Catalina {
                          "org.apache.catalina.core.StandardThreadExecutor",
                          "className");
         digester.addSetProperties("Server/Service/Executor");
-
+        //调用StandardService的addExecutor添加StandardThreadExecutor
         digester.addSetNext("Server/Service/Executor",
                             "addExecutor",
                             "org.apache.catalina.Executor");
 
 
         digester.addRule("Server/Service/Connector",
-                         new ConnectorCreateRule());
+                         new ConnectorCreateRule());  //注意ConnectorCreateRule的特殊
         digester.addRule("Server/Service/Connector",
                          new SetAllPropertiesRule(new String[]{"executor"}));
+        //调用StandardService的addConnector 添加Connector
         digester.addSetNext("Server/Service/Connector",
                             "addConnector",
                             "org.apache.catalina.connector.Connector");
@@ -612,8 +625,14 @@ public class Catalina {
 
             try {
                 inputSource.setByteStream(inputStream);
+                /**
+                 * 最先入栈的为Catalina本身,因此在解析Server节点时,
+                 * SetNextRule 中
+                 *  Object child = digester.peek(0);
+                     Object parent = digester.peek(1);对应的parent为Catalina
+                 */
                 digester.push(this);
-                digester.parse(inputSource);
+                digester.parse(inputSource);  //解析,采用事件触发的方式调用,startElement  endElement等相关方法
             } catch (SAXParseException spe) {
                 log.warn("Catalina.start using " + getConfigFile() + ": " +
                         spe.getMessage());
@@ -632,13 +651,17 @@ public class Catalina {
             }
         }
 
-        getServer().setCatalina(this);  // StandardServer
+        getServer().setCatalina(this);  // getServer()返回的是StandardServer
 
-        // Stream redirection
+        // Stream redirection 重定向输出流
         initStreams();
 
         // Start the new server
         try {
+            /**
+             * StandardServer继承LifecycleBase,调用LifecycleBase的init(),最终调用自身覆写的initInternal
+             *
+             */
             getServer().init();
         } catch (LifecycleException e) {
             if (Boolean.getBoolean("org.apache.catalina.startup.EXIT_ON_INIT_FAILURE")) {

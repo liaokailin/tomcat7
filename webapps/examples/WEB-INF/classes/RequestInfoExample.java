@@ -15,14 +15,10 @@
 * limitations under the License.
 */
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ResourceBundle;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.util.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
 
 import util.HTMLFilter;
 
@@ -34,11 +30,9 @@ import util.HTMLFilter;
 
 public class RequestInfoExample extends HttpServlet {
 
-    private static final long serialVersionUID = 1L;
 
-    private static final ResourceBundle RB = ResourceBundle.getBundle("LocalStrings");
+    ResourceBundle rb = ResourceBundle.getBundle("LocalStrings");
 
-    @Override
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response)
         throws IOException, ServletException
@@ -49,7 +43,7 @@ public class RequestInfoExample extends HttpServlet {
         out.println("<html>");
         out.println("<head>");
 
-        String title = RB.getString("requestinfo.title");
+        String title = rb.getString("requestinfo.title");
         out.println("<title>" + title + "</title>");
         out.println("</head>");
         out.println("<body bgcolor=\"white\">");
@@ -70,23 +64,23 @@ public class RequestInfoExample extends HttpServlet {
 
         out.println("<h3>" + title + "</h3>");
         out.println("<table border=0><tr><td>");
-        out.println(RB.getString("requestinfo.label.method"));
+        out.println(rb.getString("requestinfo.label.method"));
         out.println("</td><td>");
         out.println(HTMLFilter.filter(request.getMethod()));
         out.println("</td></tr><tr><td>");
-        out.println(RB.getString("requestinfo.label.requesturi"));
+        out.println(rb.getString("requestinfo.label.requesturi"));
         out.println("</td><td>");
         out.println(HTMLFilter.filter(request.getRequestURI()));
         out.println("</td></tr><tr><td>");
-        out.println(RB.getString("requestinfo.label.protocol"));
+        out.println(rb.getString("requestinfo.label.protocol"));
         out.println("</td><td>");
         out.println(HTMLFilter.filter(request.getProtocol()));
         out.println("</td></tr><tr><td>");
-        out.println(RB.getString("requestinfo.label.pathinfo"));
+        out.println(rb.getString("requestinfo.label.pathinfo"));
         out.println("</td><td>");
         out.println(HTMLFilter.filter(request.getPathInfo()));
         out.println("</td></tr><tr><td>");
-        out.println(RB.getString("requestinfo.label.remoteaddr"));
+        out.println(rb.getString("requestinfo.label.remoteaddr"));
         out.println("</td><td>");
         out.println(HTMLFilter.filter(request.getRemoteAddr()));
         out.println("</td></tr>");
@@ -104,7 +98,6 @@ public class RequestInfoExample extends HttpServlet {
         out.println("</table>");
     }
 
-    @Override
     public void doPost(HttpServletRequest request,
                       HttpServletResponse response)
         throws IOException, ServletException

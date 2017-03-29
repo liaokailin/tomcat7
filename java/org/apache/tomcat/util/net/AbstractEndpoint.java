@@ -662,7 +662,7 @@ public abstract class AbstractEndpoint<S> {
     public final void init() throws Exception {
         testServerCipherSuitesOrderSupport();
         if (bindOnInit) {
-            bind();
+            bind(); //绑定,子类实现 JIoEndpoint
             bindState = BindState.BOUND_ON_INIT;
         }
     }

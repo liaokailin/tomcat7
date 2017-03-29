@@ -16,20 +16,19 @@
 */
 package examples;
 
+
+import javax.servlet.jsp.*;
+
 import java.io.IOException;
 
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspTagException;
-
 /**
- * Log the contents of the body. Could be used to handle errors etc.
+ * Log the contents of the body. Could be used to handle errors etc. 
  */
-public class LogTag extends ExampleTagBase {
-
-    private static final long serialVersionUID = 1L;
-
+public class LogTag 
+    extends ExampleTagBase
+{
     boolean toBrowser = false;
-
+    
     public void setToBrowser(String value) {
         if (value == null)
             toBrowser = false;
@@ -39,12 +38,10 @@ public class LogTag extends ExampleTagBase {
             toBrowser = false;
     }
 
-    @Override
     public int doStartTag() throws JspException {
         return EVAL_BODY_BUFFERED;
     }
-
-    @Override
+    
     public int doAfterBody() throws JspException {
         try {
             String s = bodyOut.getString();
@@ -58,4 +55,6 @@ public class LogTag extends ExampleTagBase {
     }
 }
 
-
+    
+        
+    

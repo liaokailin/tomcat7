@@ -161,9 +161,13 @@ public class SetPropertiesRule extends Rule {
     @Override
     public void begin(String namespace, String theName, Attributes attributes)
             throws Exception {
-        
+
+        /**
+         * 该方式的核心是各种规则共享同一digester,使用的digester的ArrayStack
+         */
         // Populate the corresponding properties of the top object
-        Object top = digester.peek();  //出栈,设置属性,该方法出栈,但不删除对应栈顶元素
+        Object top = digester.peek();  //出栈,设置属性,该方法出栈,但不删除对应栈顶元素,在ObjectCreateRule的end方法从stack中踢出
+
         if (digester.log.isDebugEnabled()) {
             if (top != null) {
                 digester.log.debug("[SetPropertiesRule]{" + digester.match +

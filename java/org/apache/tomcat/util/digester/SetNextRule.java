@@ -22,6 +22,8 @@ import org.apache.tomcat.util.IntrospectionUtils;
 
 
 /**
+ *
+ * 该规则用来构建xml的父子节点关联关系,将子节点设置为父节点的属性,其中栈顶为子节点,栈的第二个元素为父节点
  * <p>Rule implementation that calls a method on the (top-1) (parent)
  * object, passing the top object (child) as an argument.  It is
  * commonly used to establish parent-child relationships.</p>
@@ -184,7 +186,7 @@ public class SetNextRule extends Rule {
 
         // Identify the objects to be used
         Object child = digester.peek(0);
-        Object parent = digester.peek(1);
+        Object parent = digester.peek(1);//
         if (digester.log.isDebugEnabled()) {
             if (parent == null) {
                 digester.log.debug("[SetNextRule]{" + digester.match +
@@ -197,6 +199,13 @@ public class SetNextRule extends Rule {
             }
         }
 
+        /**
+         * 以Catalina设置setServer为例子,
+         * parent为Catalina,
+         * methodName:setServer
+         * paramType: StandardServer
+         * digester.getClassLoader(): UrlClassLoader
+         */
         // Call the specified method
         IntrospectionUtils.callMethod1(parent, methodName,
                 child, paramType, digester.getClassLoader());

@@ -46,7 +46,7 @@ public final class LifecycleSupport {
     public LifecycleSupport(Lifecycle lifecycle) {
 
         super();
-        this.lifecycle = lifecycle;
+        this.lifecycle = lifecycle;  //构造时调用
 
     }
 
@@ -72,6 +72,7 @@ public final class LifecycleSupport {
 
 
     /**
+     * 增加生命周期的监听,用数组存储
      * Add a lifecycle event listener to this component.
      *
      * @param listener The listener to add
@@ -114,7 +115,7 @@ public final class LifecycleSupport {
         LifecycleEvent event = new LifecycleEvent(lifecycle, type, data);
         LifecycleListener interested[] = listeners;
         for (int i = 0; i < interested.length; i++)
-            interested[i].lifecycleEvent(event);   //调用各监听器,发布事件
+            interested[i].lifecycleEvent(event);   //调用各监听器,发布事件,各事件监听器自行判断该事件是否为本身关心的事件
 
     }
 

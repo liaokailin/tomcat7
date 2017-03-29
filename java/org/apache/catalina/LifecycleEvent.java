@@ -46,7 +46,7 @@ public final class LifecycleEvent extends EventObject {
      */
     public LifecycleEvent(Lifecycle lifecycle, String type, Object data) {
 
-        super(lifecycle);
+        super(lifecycle);//事件源
         this.type = type;
         this.data = data;
     }

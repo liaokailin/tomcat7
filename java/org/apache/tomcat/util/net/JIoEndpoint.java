@@ -385,7 +385,7 @@ public class JIoEndpoint extends AbstractEndpoint<Socket> {
             setMaxConnections(getMaxThreadsInternal());
         }
 
-        if (serverSocketFactory == null) {
+        if (serverSocketFactory == null) {  //构造serverSocketFactory
             if (isSSLEnabled()) {
                 serverSocketFactory =
                     handler.getSslImplementation().getServerSocketFactory(this);

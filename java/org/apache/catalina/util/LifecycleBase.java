@@ -93,6 +93,10 @@ public abstract class LifecycleBase implements Lifecycle {
 
     @Override
     public final synchronized void init() throws LifecycleException {
+
+        /**
+         * 检查当前状态是否为New,避免重复初始化,注意state为volatile
+         */
         if (!state.equals(LifecycleState.NEW)) {
             invalidTransition(Lifecycle.BEFORE_INIT_EVENT);
         }
@@ -355,7 +359,7 @@ public abstract class LifecycleBase implements Lifecycle {
      * 设置内部生命周期状态
      * @param state 当前状态
      * @param data  发布状态事件携带的数据
-     * @param check 是否需要check
+     * @param check 是否需要进行校验
      * @throws LifecycleException
      */
     private synchronized void setStateInternal(LifecycleState state,
@@ -393,12 +397,17 @@ public abstract class LifecycleBase implements Lifecycle {
         }
 
         this.state = state;  // 设置状态
-        String lifecycleEvent = state.getLifecycleEvent();
+        String lifecycleEvent = state.getLifecycleEvent();//获取生命周期状态对应的事件
         if (lifecycleEvent != null) {
             fireLifecycleEvent(lifecycleEvent, data);  //触发事件,类似观察者模式
         }
     }
 
+    /**
+     * 无效的事件,抛出LifecycleException异常
+     * @param type
+     * @throws LifecycleException
+     */
     private void invalidTransition(String type) throws LifecycleException {
         String msg = sm.getString("lifecycleBase.invalidTransition", type,
                 toString(), state);

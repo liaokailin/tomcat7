@@ -449,7 +449,7 @@ public abstract class AbstractProtocol<S> implements ProtocolHandler,
         endpoint.setName(endpointName.substring(1, endpointName.length()-1));
 
         try {
-            endpoint.init();
+            endpoint.init();  //调用JIoEndpoint对应的init方法,该init调用bind(),从而构造ServerSocketFactory等相关信息
         } catch (Exception ex) {
             getLog().error(sm.getString("abstractProtocolHandler.initError",
                     getName()), ex);

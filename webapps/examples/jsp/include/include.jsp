@@ -1,4 +1,5 @@
-<%--
+<html>
+<!--
  Licensed to the Apache Software Foundation (ASF) under one or more
   contributor license agreements.  See the NOTICE file distributed with
   this work for additional information regarding copyright ownership.
@@ -13,8 +14,7 @@
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
---%>
-<html>
+-->
 
 <body bgcolor="white">
 
@@ -22,9 +22,14 @@
 
 <%@ page buffer="5kb" autoFlush="false" %>
 
-<p>In place evaluation of another JSP which gives you the current time: <%@ include file="foo.jsp" %>
+<p>In place evaluation of another JSP which gives you the current time:
 
-<p> <jsp:include page="foo.html" flush="true"/> by including the output of another JSP: <jsp:include page="foo.jsp" flush="true"/>
-:-)
+<%@ include file="foo.jsp" %>
+
+<p> <jsp:include page="foo.html" flush="true"/> by including the output of another JSP:
+
+<jsp:include page="foo.jsp" flush="true"/>
+
+:-) 
 
 </html>

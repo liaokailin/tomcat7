@@ -376,6 +376,7 @@ public class StandardService extends LifecycleMBeanBase implements Service {
     }
 
     /**
+     * 查询所有的Executor,设置共享的线程池
      * Retrieves all executors
      * @return Executor[]
      */
@@ -550,7 +551,7 @@ public class StandardService extends LifecycleMBeanBase implements Service {
             if (executor instanceof LifecycleMBeanBase) {
                 ((LifecycleMBeanBase) executor).setDomain(getDomain());
             }
-            executor.init();
+            executor.init();  // StandardThreadExecutor#initInternal
         }
 
         // Initialize our defined Connectors

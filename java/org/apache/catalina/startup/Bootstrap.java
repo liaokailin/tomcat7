@@ -64,7 +64,7 @@ public final class Bootstrap {
     /**
      * Daemon reference.
      */
-    private Object catalinaDaemon = null;
+    private Object catalinaDaemon = null;  //为Catalina的实例
 
 
     ClassLoader commonLoader = null;

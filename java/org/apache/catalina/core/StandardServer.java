@@ -791,7 +791,7 @@ public final class StandardServer extends LifecycleMBeanBase implements Server {
     @Override
     protected void initInternal() throws LifecycleException {
         
-        super.initInternal();
+        super.initInternal();  //MBean的注册
 
         // Register global String cache
         // Note although the cache is global, if there are multiple Servers

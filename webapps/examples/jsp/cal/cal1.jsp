@@ -1,4 +1,5 @@
-<%--
+<HTML>
+<!--
  Licensed to the Apache Software Foundation (ASF) under one or more
   contributor license agreements.  See the NOTICE file distributed with
   this work for additional information regarding copyright ownership.
@@ -13,10 +14,9 @@
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
---%>
-<HTML>
-<HEAD><TITLE>
-    Calendar: A JSP APPLICATION
+-->
+<HEAD><TITLE> 
+	Calendar: A JSP APPLICATION
 </TITLE></HEAD>
 
 
@@ -26,8 +26,8 @@
 <jsp:useBean id="table" scope="session" class="cal.TableBean" />
 
 <%
-    table.processRequest(request);
-    if (table.getProcessError() == false) {
+	table.processRequest(request);
+	if (table.getProcessError() == false) {
 %>
 
 <!-- html table goes here -->
@@ -48,20 +48,20 @@
 </TR>
 <FORM METHOD=POST ACTION=cal1.jsp>
 <%
-    for(int i=0; i<table.getEntries().getRows(); i++) {
-       cal.Entry entr = table.getEntries().getEntry(i);
+	for(int i=0; i<table.getEntries().getRows(); i++) {
+	   cal.Entry entr = table.getEntries().getEntry(i);	
 %>
-    <TR>
-    <TD>
-    <A HREF=cal2.jsp?time=<%= entr.getHour() %>>
-        <%= entr.getHour() %> </A>
-    </TD>
-    <TD BGCOLOR=<%= entr.getColor() %>>
-    <% out.print(util.HTMLFilter.filter(entr.getDescription())); %>
-    </TD>
-    </TR>
+	<TR>
+	<TD> 
+	<A HREF=cal2.jsp?time=<%= entr.getHour() %>>
+		<%= entr.getHour() %> </A>
+	</TD>
+	<TD BGCOLOR=<%= entr.getColor() %>>
+	<% out.print(util.HTMLFilter.filter(entr.getDescription())); %>
+	</TD> 
+	</TR>
 <%
-    }
+	}
 %>
 </FORM>
 </TABLE>
@@ -70,24 +70,26 @@
 <!-- footer -->
 <TABLE WIDTH=60% BGCOLOR=yellow CELLPADDING=15>
 <TR>
-<TD ALIGN=CENTER>  <% out.print(util.HTMLFilter.filter(table.getName())); %> :
-             <% out.print(util.HTMLFilter.filter(table.getEmail())); %> </TD>
+<TD ALIGN=CENTER>  <% out.print(util.HTMLFilter.filter(table.getName())); %> : 
+		     <% out.print(util.HTMLFilter.filter(table.getEmail())); %> </TD>
 </TR>
 </TABLE>
 </CENTER>
 
 <%
-    } else {
+	} else {
 %>
 <font size=5>
-    You must enter your name and email address correctly.
+	You must enter your name and email address correctly.
 </font>
 <%
-    }
+	}
 %>
 
 
 </BODY>
 </HTML>
+
+
 
 

@@ -19,9 +19,8 @@
 package validators;
 
 
-import java.io.IOException;
 import java.io.InputStream;
-
+import java.io.IOException;
 import javax.servlet.jsp.tagext.PageData;
 import javax.servlet.jsp.tagext.TagLibraryValidator;
 import javax.servlet.jsp.tagext.ValidationMessage;
@@ -56,7 +55,6 @@ public class DebugValidator extends TagLibraryValidator {
      * @param uri The value of the URI argument in this directive
      * @param page The page data for this page
      */
-    @Override
     public ValidationMessage[] validate(String prefix, String uri,
                                         PageData page) {
 

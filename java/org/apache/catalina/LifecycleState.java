@@ -77,7 +77,7 @@ public enum LifecycleState {
     }
 
     /**
-     *
+     *获取生命周期状态对应的事件 ,例如状态为INITIALIZING时对应触发的生命周期事件为BEFORE_INIT_EVENT(开始初始化事件)
      */
     public String getLifecycleEvent() {
         return lifecycleEvent;
